@@ -7,8 +7,15 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         default_schema: eventstore
         dialect: info.novatec.axon.AxonPostgreSQLDialect
+
+# Possible values for these keys are `default`, `xstream`, `java`, and `jackson`.
+axon:
+  serializer:
+    general: jackson
+    events: jackson
+    messages: jackson
