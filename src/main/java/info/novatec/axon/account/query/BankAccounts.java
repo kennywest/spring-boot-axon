@@ -1,9 +1,7 @@
 package info.novatec.axon.account.query;
 
-import info.novatec.axon.BaseEvent;
 import info.novatec.axon.account.event.AccountCreatedEvent;
 import info.novatec.axon.account.event.MoneyDepositedEvent;
-import org.axonframework.eventhandling.DomainEventMessage;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.eventsourcing.eventstore.EventStore;
 import org.axonframework.modelling.command.Repository;
@@ -37,15 +35,6 @@ public class BankAccounts {
 
     @QueryHandler
     public BankAccountDto handle(BankAccountQuery query) {
-        //System.out.println(repository.load(query.id));
-        BankAccountDto account = accounts.get(query.id);
-
-        if (account == null) {
-            this.eventStore.readEvents(query.id).asStream().forEach(msg -> {
-                BaseEvent event = (BaseEvent) ((DomainEventMessage) msg).getPayload();
-            });
-        }
-
-        return account;
+        return this.accounts.get(query.id);
     }
 }
